@@ -1,0 +1,36 @@
+<p>category-detail works!</p>
+<div class="loading" *ngIf="!posts">
+  Cargando...
+</div>
+
+<div class="container-fluid">
+  <h1>{{ page_title }}</h1>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div *ngFor='let post of posts' class="col">
+      <div class="card" style="width: 18rem;">
+        <div class="post-image w-100" *ngIf="post.image">
+          <img src="{{url + 'post/image/' + post.image}}" class="card-img-top img-thumbnail" style="height: 238px;"
+            alt="...">
+        </div>
+        <div class="post-image w-100" *ngIf="!post.image">
+          <img src="https://placehold.co/600x400" class="card-img-top img-thumbnail" style="height: 238px;" alt="...">
+        </div>
+        <div class="card-body">
+          <a [routerLink]="['/entrada/', post.id]"
+            class="link-primary link-offset-2 link-offset-2-hover link-underline link-underline-opacity-0 link-underline-opacity-50-hover link-opacity-75-hover">
+            <h5 class=" card-title">{{post.title}}</h5>
+          </a>
+          <p class="card-text" [innerHtml]="post.content">
+          </p>
+          <div class="post-buttons d-flex justify-content-start">
+            <a [routerLink]="['/entrada/', post.id]" class="btn btn-success me-1">Leer</a>
+            <span *ngIf="identity && identity.sub == post.user_id">
+              <a [routerLink]="['/editar-entrada/', post.id]" class="btn btn-warning me-1">Editar</a>
+              <a [routerLink]="['/borrar-entrada/1', post.id ]" class="btn btn-danger">Borrar</a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

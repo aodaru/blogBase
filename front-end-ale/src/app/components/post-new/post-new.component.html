@@ -1,0 +1,76 @@
+<div class="col-md-12 mt-3 pb-5">
+  <h1>{{ page_title }}</h1>
+  <p *ngIf="(status != 'success')">Agrega un nuevo articulo al post</p>
+
+  <hr class="border border-danger border-3 opacity-75">
+  <!-- MENSAJES DE ALERTA  -->
+  <div class="alert alert-success col-md-8 mt-3" *ngIf="(status == 'success')" role=" alert">
+    Los datos se han guardado correctamente -
+  </div>
+
+  <div class="alert alert-danger col-md-7 mt-3" *ngIf="(status == 'error')" role="alert">
+    Los datos no se han guardado correctamente
+  </div>
+  <!-- FIN MENSAJES DE ALERTA  -->
+
+
+  <!-- FORMULARION DE CREACION DE NUEVAS ENTRADAS -->
+  <form class="col-md-5 ml-0 pl-0" #postNew="ngForm" (ngSubmit)="onSubmit(postNew)" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="title" class="form-label">Titulo</label>
+      <input name="title" type="text" class="form-control" #title="ngModel" [(ngModel)]="post.title" required>
+      <div *ngIf="!title.valid && title.touched" class="invalid-feedback d-block">El titulo no es valido
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="category" class="form-label">Categorias</label>
+      <select name="category" #category="ngModel" [(ngModel)]="post.category_id" class="form-select"
+        aria-label="Default select example">
+        <option selected>Elija una categoria</option>
+        @for (category of categories; track category.id){
+        <option value="{{category.id}}">{{category.name}}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="content" class="form-label">Contenido</label>
+      <textarea [froalaEditor]="options" [(froalaModel)]="post.content" name="content" class="form-control"
+        #content="ngModel" [(ngModel)]="post.content"></textarea>
+      <div *ngIf="!content.valid && content.touched" class="invalid-feedback d-block">El contenido no es valido
+      </div>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="image" class="form-label">Imagen</label>
+
+      <div
+        class="my-2 p-2 d-flex rounded flex-row align-items-center justify-content-around bg-secondary-subtle shadow">
+        <div *ngIf="filename && filename != ''" class="bg-white p-1 rounded-3 mx-3">
+          <div class="bg-secondary-subtle p-1 rounded-3">
+            <img class="rounded-3 img-thumbnail shadow-lg" src="{{ url + 'post/image/' + filename }}" alt="">
+          </div>
+        </div>
+        <div class="p-2 bg-white rounded-2 shadow">
+          {{ filename || "No se ha cargado el archivo" }}
+        </div>
+        <div class="mx-3">
+          <a style="width: 48px; height: 48px;"
+            class="rounded-circle d-flex align-items-center justify-content-center btn btn-primary hover-shadow"
+            aria-label="file_upload" onclick="document.getElementById('getFile').click()">
+            <mat-icon>file_upload</mat-icon>
+          </a>
+          <input id="getFile" type="file" class="file-upload" style="display: none;"
+            onchange="console.log(event.target.files)" (change)="onFileSelected($event)" accept="image/*,.jpg,.png">
+        </div>
+      </div>
+    </div>
+
+    <input type="submit" class="btn btn-success mt-3" [disabled]="postNew.invalid">
+
+  </form>
+
+  <!-- FIN FORMULARION DE CREACION DE NUEVAS ENTRADAS -->
+</div>

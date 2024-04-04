@@ -1,0 +1,74 @@
+<div class="container"> <!-- CONTENEDOR PRINCIPAL -->
+  <nav class="navbar navbar-expand-lg bg-dark rounded-bottom" data-bs-theme="dark"> <!-- BARRA DE NAVEGACION -->
+    <div class="container-fluid">
+      <a class="navbar-brand" [routerLink]="['/inicio']">
+      <i class="bi bi-cup-hot-fill "></i>
+        ALEBLOG</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0"><!-- MENU PRINCIPAL -->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" [routerLink]="['/inicio']">Inicio</a>
+          </li>
+          <li class="nav-item" *ngFor="let category of categories">
+            <a class="nav-link" [routerLink]="['/categoria/', category.id]">{{ category.name }}</a>
+          </li>
+        </ul><!-- CIERRE MENU PRINCIPAL -->
+
+        <ul class="navbar-nav me-2 mb-lg-0" *ngIf="(!identity)"><!-- LOGIN/REGISTRO -->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" [routerLink]="['/login']">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/registro']">Registro</a>
+          </li>
+        </ul><!-- CIERRE LOGIN/REGISTRO -->
+
+        <ul class="navbar-nav me-2 mb-lg-0 d-md-flex d-sm-block align-items-center" *ngIf="(identity)">
+          <!-- MENU DE USUARIO -->
+          <li *ngIf="identity && identity.image" class="rounded-circle shadow-lg d-md-block d-sm-none"
+            style="width: 40px">
+            <img class="rounded-circle img-fluid shadow" src="{{ url + 'user/avatar/' + identity.image }}" alt="">
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ identity.name + " " + identity.surname }}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['/crear-entrada']">Crear Entrada</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/crear-categoria']">Crear Categoria </a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Perfil</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/ajustes']">Ajustes</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" [routerLink]="['/logout/1']">Cerrar Sesion</a></li>
+            </ul>
+          </li>
+        </ul><!-- CIERRE MENU DE USUARIO -->
+      </div>
+    </div>
+  </nav> <!-- CIERRE DE LA BARRA DE NAVEGACION -->
+  <!-- CONTENIDO -->
+  <router-outlet></router-outlet>
+
+</div> <!-- CIERRE DEL CONTENDOR -->
+<footer class="container p-0 bg-dark text-center text-white rounded-top fixed-bottom">
+  <!-- <section class="mb-4"> -->
+  <!--   <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a> -->
+  <!-- </section> -->
+  <div class="copy text-center pt-2" style="background-color: rgba(0, 0, 0, 0.2);">
+    &copy; {{currentYear}} Copyright:
+    <a class="text-white" href="https://ale.adalgarcia.com/">ale.adalgarcia.com</a>
+  </div>
+  <div class="text-center pb-2" style="background-color: rgba(0, 0, 0, 0.2);">
+    Desarrollado por:
+    <a class="text-white" href="https://adalgarcia.com/">Adal Michael García</a>
+  </div>
+</footer>

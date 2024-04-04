@@ -1,0 +1,14 @@
+<div class="col-md-12 mt-3 mb-5" *ngIf="post != null">
+  <h1>{{ page_title }}</h1>
+  <small>{{post.category.name}} - {{post.user.name + " " +
+    post.user.surname}}</small>
+  <hr class="border border-danger border-3 opacity-75">
+  <p [innerHtml]="post.content">
+  </p>
+
+  <div *ngIf="post && post.image''" class="bg-white p-1 rounded-3 mx-3 w-25">
+    <div class="bg-secondary-subtle p-1 rounded-3">
+      <img src="{{ url + 'post/image/' + post.image }}" class="img-thumbnail" alt="">
+    </div>
+  </div>
+</div>

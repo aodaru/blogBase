@@ -1,0 +1,35 @@
+<div class="col-md-12 mt-3">
+  <h1>{{ page_title }}</h1>
+  <p *ngIf="(status != 'success')">Identificate en la plataforma para comenzar!!</p>
+
+  <!-- MENSAJES DE ALERTA  -->
+  <div class="alert alert-success col-md-7 mt-3" *ngIf="(status == 'success')" role=" alert">
+    El registro de completo correctamente, <a [routerLink]="['/login']">logeate aquí</a>
+  </div>
+
+  <div class="alert alert-danger col-md-7 mt-3" *ngIf="(status == 'error')" role="alert">
+    El registro no se ha completado correctamente
+  </div>
+  <!-- FIN MENSAJES DE ALERTA  -->
+
+
+  <!-- FORMULARION DE LOGIN -->
+  <form class="col-md-5 ml-0 pl-0" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo</label>
+      <input type="email" name="email" class="form-control" #email="ngModel" [(ngModel)]="user.email" required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+      <div *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">El correo no es válido
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input type="password" name="password" class="form-control" #password="ngModel" [(ngModel)]="user.password"
+        required>
+    </div>
+    <div *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">La contraseña no es válida
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="loginForm.invalid">Identificarse</button>
+  </form>
+  <!-- FIN FORMULARION DE LOGIN -->
+</div>
